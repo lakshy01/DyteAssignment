@@ -317,6 +317,16 @@
 	}
 }
 
+.save-btn {
+	background-color: #FFCA28;
+	color: black;
+	border-bottom-right-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+	border-top-right-radius: .5rem;
+    border-top-left-radius: .5rem;
+	float: right;
+	font-weight: bolder;
+}
   
   .code-mirror-wrapper {
     flex-grow: 1;

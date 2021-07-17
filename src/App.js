@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import Editor from './components/Editor';
 import useLocalStorage from './hooks/useLocalStorage';
 
 import './App.css';
 
-const App = () => {
+// "proxy": ["https://pastebin.com/login","http://localhost:3000","https://pastebin.com/api/api_login.php"],
 
+const App = () => {
     const [html, setHtml] = useLocalStorage('html', '');
     const [css, setCss] = useLocalStorage('css', '');
     const [js, setJs] = useLocalStorage('js', '');
@@ -30,25 +31,45 @@ const App = () => {
         return () => clearTimeout(timeout)
       }, [html, css, js]);
 
-      const changeToHtml = () => {
-          setIshtml(true);
-          setIscss(false);
-          setIsjs(false);
-      };
-
-      
-      const changeToCss = () => {
-        setIshtml(false);
-        setIscss(true);
-        setIsjs(false);
-      };
-
-      
-      const changeToJs = () => {
-        setIshtml(false);
+    const changeToHtml = () => {
+        setIshtml(true);
         setIscss(false);
-        setIsjs(true);
-      };
+        setIsjs(false);
+    };
+
+      
+    const changeToCss = () => {
+       setIshtml(false);
+       setIscss(true);
+       setIsjs(false);
+    };
+
+      
+    const changeToJs = () => {
+       setIshtml(false);
+       setIscss(false);
+       setIsjs(true);
+    };
+
+    const saveCode = () => {
+
+        const headers = {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
+        };
+
+        axios.post("https://pastebin.com/login",{
+            api_dev_key: "7zjSMqN8lqi2JPQ6k7EBW4bCwuvMCOU-",
+            api_user_name: "lakshy01",
+            api_user_password: "Welcome@1234" 
+        },{headers})
+        .then((data)=>{
+            console.log(data);
+        })
+        .catch((err)=>{
+            console.log("Not done");
+        })
+    }
 
 
     return(
@@ -56,7 +77,7 @@ const App = () => {
             <div className="app">
                 <div className="header">
                     <div className="search-bar">
-                        <input type="text" placeholder="Search" />
+                        <button class="save-btn" onClick={saveCode}>Save Code</button>
                     </div>
                 </div>
                 <div className="wrapper">
